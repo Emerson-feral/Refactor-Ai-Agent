@@ -1,0 +1,32 @@
+{
+  "name": "refactor-ai-agent",
+  "version": "1.0.0",
+  "description": "Agentic AI system that analyzes pull requests.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Emerson-feral/Refactor-Ai-Agent.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Emerson-feral/Refactor-Ai-Agent/issues"
+  },
+  "homepage": "https://github.com/Emerson-feral/Refactor-Ai-Agent#readme",
+  "dependencies": {
+    "@octokit/rest": "^22.0.1",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "github-webhook": "^3.0.13",
+    "openai": "^6.34.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.6.0"
+  }
+}
