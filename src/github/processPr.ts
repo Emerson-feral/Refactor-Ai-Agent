@@ -12,6 +12,8 @@ type ReviewCommentParams = {
   commit_id: string;
 };
 
+const gif = "https://i.pinimg.com/originals/ba/8d/cb/ba8dcb932bb7536ea59442202c2efab5.gif";
+
 export async function processPR(pr: any) {
   const owner = pr.base.repo.owner.login;
   const repo = pr.base.repo.name;
@@ -39,9 +41,13 @@ export async function processPR(pr: any) {
     const changes = parsePatch(file.patch);
 
     for (const change of changes) {
-      const review = await reviewCode(change.code);
+      const review = await reviewCode(change.code, file.filename);
 
-      if (!review) continue;
+      if (!review || review.trim() === "OK") continue;
+
+      const body = `![gif](${gif}) - AI AGENT REVIEW : 
+      ${review}
+      `;
 
       const comment: ReviewCommentParams = {
         owner,
@@ -49,7 +55,7 @@ export async function processPR(pr: any) {
         pull_number,
         path: file.filename,
         line: change.line,
-        body: review,
+        body,
         commit_id,
       };
 
