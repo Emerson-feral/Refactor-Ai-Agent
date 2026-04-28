@@ -1,5 +1,6 @@
 import { octokit } from "./githubClient";
 import { reviewCode } from "../agent/reviewAgent";
+import { parsePatch } from "../analysis/patchParser";
 
 type ReviewCommentParams = {
   owner: string;
@@ -35,18 +36,24 @@ export async function processPR(pr: any) {
 
     if (!file.patch) continue;
 
-    const review = await reviewCode(file.patch);
+    const changes = parsePatch(file.patch);
 
-    const comment: ReviewCommentParams = {
-      owner,
-      repo,
-      pull_number,
-      path: file.filename,
-      line: 1,
-      body: review,
-      commit_id,
-    };
+    for (const change of changes) {
+      const review = await reviewCode(change.code);
 
-    await octokit.pulls.createReviewComment(comment);
+      if (!review) continue;
+
+      const comment: ReviewCommentParams = {
+        owner,
+        repo,
+        pull_number,
+        path: file.filename,
+        line: 1,
+        body: review,
+        commit_id,
+      };
+
+      await octokit.pulls.createReviewComment(comment);
+    }    
   }
 }
