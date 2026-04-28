@@ -1,6 +1,5 @@
 // userService.ts
-
-import express from "express";
+import express from "exprss";
 
 const app = express();
 
