@@ -19,7 +19,7 @@ export async function reviewCode(diff: string): Promise<string> {
             - bad practices
 
             And answer in this format using the minimum amount of words possible:
-            - ![gif](https://emojis.slackmojis.com/emojis/images/1620248090/36123/megaman_dance.gif?1620248090) Review AI Agent:
+            - ![gif](https://emojis.slackmojis.com/emojis/images/1620248090/36123/megaman_dance.gif?1620248090) - AI AGENT REVIEW:
             - Issue: Say whats the issue
             - Explanation: Explain why is it an issue
             - Suggestion: Suggest how to fix it
