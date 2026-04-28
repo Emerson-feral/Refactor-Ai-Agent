@@ -1,4 +1,4 @@
-export async function reviewCode(diff: string): Promise<string> {
+export async function reviewCode(code: string, filename: string ): Promise<string> {
   const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
     method: "POST",
     headers: {
@@ -7,27 +7,35 @@ export async function reviewCode(diff: string): Promise<string> {
     },
     body: JSON.stringify({
       model: "llama-3.1-8b-instant",
+      max_tokens: 80,
+      temperature: 0.2,
       messages: [
         {
           role: "system",
-          content: `
-            You are a senior reviewer.
+          content:`
+            You are a strict code reviewer.
 
-            Analyze this diff and find:
-            - bugs
-            - performance issues
-            - bad practices
+            Rules:
+            - Analyze ONLY the given code
+            - Do NOT invent code
+            - Do NOT create examples
+            - Do NOT assume missing context
+            - If there is no real issue, return ONLY: OK
+            - Be concise (max 1 sentence)
 
-            And answer in this format using the minimum amount of words possible:
-            - ![gif](https://emojis.slackmojis.com/emojis/images/1620248090/36123/megaman_dance.gif?1620248090) - AI AGENT REVIEW:
-            - Issue: Say whats the issue
-            - Explanation: Explain why is it an issue
-            - Suggestion: Suggest how to fix it
+            Output format:
+            Issue: <short>
+            Fix: <short>
           `,
         },
         {
           role: "user",
-          content: `Analyze this diff:\n${diff}`,
+          content:`
+            File: ${filename}
+
+            Changed line:
+            ${code}
+          `,
         },
       ],
     }),
