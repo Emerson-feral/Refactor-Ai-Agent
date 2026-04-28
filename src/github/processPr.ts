@@ -35,7 +35,7 @@ export async function processPR(pr: any) {
 
   // PR Comment
   await octokit.issues.createComment({
-    owner: owner.login,
+    owner: owner,
     repo,
     issue_number: pull_number,
     body: finalReview,
