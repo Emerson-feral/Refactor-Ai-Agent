@@ -45,7 +45,7 @@ export async function processPR(pr: any) {
 
       if (!review || review.trim() === "OK") continue;
 
-      const body = `![gif](${gif}) - AI AGENT REVIEW : 
+      const body = `🤖 AI AGENT REVIEW : 
       ${review}
       `;
 
