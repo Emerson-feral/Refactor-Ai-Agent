@@ -29,7 +29,7 @@ app.post("/users", (req, res) => {
 
   users.push(body);
 
-  res.send(users);
+  res.send(usrs);
 });
 
 export default app;
