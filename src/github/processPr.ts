@@ -48,7 +48,7 @@ export async function processPR(pr: any) {
         repo,
         pull_number,
         path: file.filename,
-        line: 1,
+        line: change.line,
         body: review,
         commit_id,
       };
