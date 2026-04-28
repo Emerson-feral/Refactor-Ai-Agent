@@ -2,7 +2,6 @@
 import express from "exprss";
 
 const app = express();
-
 let users: any = [];
 
 app.get("/users", async (req, res) => {
