@@ -27,5 +27,6 @@ app.post("/users", (req, res) => {
 
   users.push(ody);
   res.send(usrs);
+  
 });
 export default app;
