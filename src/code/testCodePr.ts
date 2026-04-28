@@ -22,7 +22,6 @@ app.get("/users", async (req, res) => {
 
 app.post("/users", (req, res) => {
   const body = req.body;
-
   if (!body.name) {
     res.send("name required");
   }
