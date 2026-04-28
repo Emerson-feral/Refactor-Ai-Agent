@@ -13,7 +13,7 @@ export async function processPR(pr: any) {
 
   // PR Diff
   const { data } = await octokit.pulls.get({
-    owner: owner.login,
+    owner: owner,
     repo,
     pull_number,
     mediaType: {
