@@ -2,9 +2,10 @@
   "name": "refactor-ai-agent",
   "version": "1.0.0",
   "description": "Agentic AI system that analyzes pull requests.",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec tsx src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,10 @@
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
-    "@types/node": "^25.6.0"
+    "@types/node": "^25.6.0",
+    "nodemon": "^3.1.14",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
   }
 }
