@@ -3,8 +3,13 @@ import { reviewCode } from "../agent/reviewAgent";
 import { splitDiff } from "../analysis/diffParser";
 
 export async function processPR(pr: any) {
-  const { owner, repo } = pr.base.repo;
+  const owner = pr.base.repo.owner.login;
+  const repo = pr.base.repo.name;
   const pull_number = pr.number;
+
+  console.log("OWNER:", owner);
+  console.log("REPO:", repo);
+  console.log("PR:", pull_number);
 
   // PR Diff
   const { data } = await octokit.pulls.get({
