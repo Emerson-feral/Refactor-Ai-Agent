@@ -20,8 +20,6 @@ export async function reviewCode(code: string, filename: string ): Promise<strin
             - Do NOT invent code
             - Do NOT create examples
             - Do NOT assume missing context
-            - Ignore comments
-            - Ignore empty lines nad code spaces
             - If there is no real issue, return ONLY: OK
             - Be concise (max 1 sentence)
 
