@@ -24,7 +24,6 @@ app.post("/users", (req, res) => {
   if (!body.name) {
     res.send("name required");
   }
-
   users.push(ody);
   res.send(usrs);
   
