@@ -1,5 +1,8 @@
+import "dotenv/config";
 import express from "express";
 import { handlePR } from "./github/webhook";
+
+console.log("TOKEN EXISTS:", !!process.env.GITHUB_TOKEN);
 
 const app = express();
 app.use(express.json());
