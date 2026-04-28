@@ -1,43 +1,52 @@
 import { octokit } from "./githubClient";
 import { reviewCode } from "../agent/reviewAgent";
-import { splitDiff } from "../analysis/diffParser";
+
+type ReviewCommentParams = {
+  owner: string;
+  repo: string;
+  pull_number: number;
+  path: string;
+  line: number;
+  body: string;
+  commit_id: string;
+};
 
 export async function processPR(pr: any) {
   const owner = pr.base.repo.owner.login;
   const repo = pr.base.repo.name;
   const pull_number = pr.number;
+  const commit_id = pr.head.sha;
 
   console.log("OWNER:", owner);
   console.log("REPO:", repo);
   console.log("PR:", pull_number);
+  console.log("COMMIT ID:", commit_id);
 
   // PR Diff
-  const { data } = await octokit.pulls.get({
-    owner: owner,
+  const { data: files } = await octokit.pulls.listFiles({
+    owner,
     repo,
     pull_number,
-    mediaType: {
-      format: "diff",
-    },
+    
   });
 
-  const diff = data as unknown as string;
+  for (const file of files) {
+    console.log("FILE:", file.filename);
 
-  // Divide in chunks
-  const chunks = splitDiff(diff);
+    if (!file.patch) continue;
 
-  let finalReview = "";
+    const review = await reviewCode(file.patch);
 
-  for (const chunk of chunks) {
-    const review = await reviewCode(chunk);
-    finalReview += review + "\n\n";
+    const comment: ReviewCommentParams = {
+      owner,
+      repo,
+      pull_number,
+      path: file.filename,
+      line: 1,
+      body: review,
+      commit_id,
+    };
+
+    await octokit.pulls.createReviewComment(comment);
   }
-
-  // PR Comment
-  await octokit.issues.createComment({
-    owner: owner,
-    repo,
-    issue_number: pull_number,
-    body: finalReview,
-  });
 }
