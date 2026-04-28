@@ -12,7 +12,6 @@ app.get("/users", async (req, res) => {
     json.map((u: any) => {
       users.push(u);
     });
-
     res.send(users);
   } catch (e) {
     console.log(e);
