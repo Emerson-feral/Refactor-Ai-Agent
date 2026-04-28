@@ -4,25 +4,49 @@ export function parsePatch(patch: string) {
   const lines = patch.split("\n");
   let currentLine = 0;
 
-  for (const line of lines) {
-    if (line.startsWith("@@")) {
-      const match = line.match(/\+(\d+)/);
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+
+    // diff header
+    if (rawLine.startsWith("@@")) {
+      const match = rawLine.match(/\+(\d+)/);
       if (match) {
         currentLine = parseInt(match[1], 10);
       }
       continue;
     }
 
-    if (line.startsWith("+") && !line.startsWith("+++")) {
+    // add line
+    if (rawLine.startsWith("+") && !rawLine.startsWith("+++")) {
+      const code = rawLine.substring(1).trim();
+
+      // ❌ ignore empty lines
+      if (!code) {
+        currentLine++;
+        continue;
+      }
+
+      // ❌ ignore common comments
+      if (
+        code.startsWith("//") ||
+        code.startsWith("/*") ||
+        code.startsWith("*") ||
+        code.startsWith("*/")
+      ) {
+        currentLine++;
+        continue;
+      }
+
       comments.push({
         line: currentLine,
-        code: line.substring(1),
+        code,
       });
+
       currentLine++;
       continue;
     }
 
-    if (!line.startsWith("-")) {
+    if (!rawLine.startsWith("-")) {
       currentLine++;
     }
   }
