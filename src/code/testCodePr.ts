@@ -28,7 +28,6 @@ app.post("/users", (req, res) => {
   }
 
   users.push(body);
-
   res.send(usrs);
 });
 
