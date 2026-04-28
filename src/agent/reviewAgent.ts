@@ -17,6 +17,12 @@ export async function reviewCode(diff: string): Promise<string> {
             - bugs
             - performance issues
             - bad practices
+
+            And answer in this format:
+            - Review Agent ![gif](https://emojis.slackmojis.com/emojis/images/1620248090/36123/megaman_dance.gif?1620248090):
+            - Issue: Say whats the issue
+            - Explanation: Explain why is it an issue
+            - Suggestion: Suggest how to fix it
           `,
         },
         {
